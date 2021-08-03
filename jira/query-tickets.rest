@@ -1,0 +1,11 @@
+### General JQL searching
+GET https://jira.mycompany.com/rest/api/latest/search
+	?jql=workLogAuthor=myuser
+	&fields=key,summary
+Authorization: Basic {{$dotenv developer_ad_username}}:{{$dotenv developer_ad_password}}
+
+### Issue picker uses context of the logged in users history
+GET https://jira.mycompany.com/rest/api/latest/issue/picker?query=home&currentJQL= HTTP/1
+	?jql=workLogAuthor=myuser
+	&fields=key,summary
+Authorization: Basic {{$dotenv developer_ad_username}}:{{$dotenv developer_ad_password}}

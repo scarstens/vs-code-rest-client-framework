@@ -1,0 +1,46 @@
+### Shorter variables for easier reading
+@token={{$dotenv developer_bot_slack_token}}
+@usertoken={{$dotenv developer_bot_slack_user_token}}
+
+### Send a message to a specific channel #my-slack-bots
+POST https://hooks.slack.com/{{$dotenv developer_slack_callback_hook_path}} HTTP/1.1
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+	"text":"Hello, World! From VS Code.",
+	"channel": "CGDAA7BHR"
+}
+
+### Generic conversations list request to confirm API access is working properly
+GET https://slack.com/api/conversations.list
+?token={{usertoken}}
+&exclude_archived=true
+
+### Search for the most recent message sent in #my-slack-bots channel
+GET https://slack.com/api/search.all
+?token={{token}}
+&query=in:my-slack-bots
+&sort=timestamp
+&limit=1
+
+### Reply in the same channel where the last message was sent in #my-slack-bots
+POST https://slack.com/api/chat.postMessage
+Content-Type: application/json
+Authorization: Bearer {{usertoken}}
+
+{
+	"channel": "CHXAFQK7Z",
+	"text": "I found your above message and will reply in thread."
+}
+
+### Reply in thread to the last message posted, make sure you pull the ts value from the search.all request.
+POST https://slack.com/api/chat.postMessage
+Content-Type: application/json
+Authorization: Bearer {{usertoken}}
+
+{
+	"channel": "CHXAFQK7Z",
+	"text": "Replying in kind to you Seth, in this thread to keep the channel clean.",
+	"thread_ts": "1599926428.005100"
+}

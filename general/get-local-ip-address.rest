@@ -1,0 +1,1 @@
+GET https://ifconfig.me/ip HTTP/1.1
